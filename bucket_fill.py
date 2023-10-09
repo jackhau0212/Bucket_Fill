@@ -103,8 +103,9 @@ def fill(image, seed_point):
     """
     
     if seed_point[0] >= len(image) or seed_point[1] >= len(image[0]) or \
-        seed_point[0] < 0 or seed_point[1] < 0 or \
-            image[seed_point[0]][seed_point[1]] == 1:
+        seed_point[0] < 0 or seed_point[1] < 0 or (not isinstance(seed_point[0], int)) or \
+        (not isinstance(seed_point[1], int)) or (image[seed_point[0]][seed_point[1]] == 1):
+        
         return image
     else:
         image[seed_point[0]][seed_point[1]] = 2
@@ -113,7 +114,6 @@ def fill(image, seed_point):
     
     while len(explore) > 0:
         parent_point = explore[0]
-        # print(parent_point)
         for i in range(4):
             if i == 0:
                 child_point = (parent_point[0] - 1, parent_point[1])
@@ -145,11 +145,11 @@ def example_fill():
     print("Before filling:")
     show_image(image)
 
-    image = fill(image=image, seed_point=(10, 2))
+    filled_image = fill(image=image, seed_point=(0, 0))
 
     print("-" * 25)
     print("After filling:")
-    show_image(image)
+    show_image(filled_image)
 
 
 if __name__ == '__main__':
