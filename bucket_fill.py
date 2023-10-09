@@ -106,12 +106,14 @@ def fill(image, seed_point):
         seed_point[0] < 0 or seed_point[1] < 0 or \
             image[seed_point[0]][seed_point[1]] == 1:
         return image
+    else:
+        image[seed_point[0]][seed_point[1]] = 2
     
     explore = [seed_point]
     
     while len(explore) > 0:
         parent_point = explore[0]
-        print(parent_point)
+        # print(parent_point)
         for i in range(4):
             if i == 0:
                 child_point = (parent_point[0] - 1, parent_point[1])
@@ -131,20 +133,19 @@ def fill(image, seed_point):
                 image[child_point[0]][child_point[1]] = 2
                 
                 explore.append(child_point)
-                
+        
         explore.remove(parent_point)
     
-    # TODO: Complete this function
     return image
 
 
 def example_fill():
-    image = load_image("data/bar.txt")
+    image = load_image("data/snake.txt")
 
     print("Before filling:")
     show_image(image)
 
-    image = fill(image=image, seed_point=(3, 3))
+    image = fill(image=image, seed_point=(10, 2))
 
     print("-" * 25)
     print("After filling:")
