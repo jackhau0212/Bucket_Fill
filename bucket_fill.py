@@ -101,9 +101,41 @@ def fill(image, seed_point):
                1 represents a boundary pixel, and
                2 represents a filled pixel
     """
-
+    
+    if seed_point[0] >= len(image) or seed_point[1] >= len(image[0]) or \
+        seed_point[0] < 0 or seed_point[1] < 0 or \
+            image[seed_point[0]][seed_point[1]] == 1:
+        return image
+    
+    explore = [seed_point]
+    
+    while len(explore) > 0:
+        parent_point = explore[0]
+        print(parent_point)
+        for i in range(4):
+            if i == 0:
+                child_point = (parent_point[0] - 1, parent_point[1])
+            elif i == 1:
+                child_point = (parent_point[0] + 1, parent_point[1])
+            elif i == 2:
+                child_point = (parent_point[0], parent_point[1] - 1)
+            elif i == 3:
+                child_point = (parent_point[0], parent_point[1] + 1)
+            
+            if child_point[0] >= len(image) or child_point[1] >= len(image[0]) or \
+                child_point[0] < 0 or child_point[1] < 0 or \
+                    image[child_point[0]][child_point[1]] == 1:
+                continue
+            
+            if image[child_point[0]][child_point[1]] == 0:
+                image[child_point[0]][child_point[1]] = 2
+                
+                explore.append(child_point)
+                
+        explore.remove(parent_point)
+    
     # TODO: Complete this function
-    return []
+    return image
 
 
 def example_fill():
@@ -112,7 +144,7 @@ def example_fill():
     print("Before filling:")
     show_image(image)
 
-    image = fill(image=image, seed_point=(7, 3))
+    image = fill(image=image, seed_point=(3, 3))
 
     print("-" * 25)
     print("After filling:")
