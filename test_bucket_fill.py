@@ -67,9 +67,9 @@ def out_of_bounds_test_pattern(file):
     show_image(image_out_of_bounds)
 
 
-def invalid_seed_points_test_pattern(file):
+def negative_seed_points_test_pattern(file):
     """
-    Test: Invalid Seed Points Case (i.e. negative values)
+    Test: Negative Seed Points Case
     Input: Seed Point has negative values
     Expected Outcome: The image is unchanged
     """
@@ -78,7 +78,28 @@ def invalid_seed_points_test_pattern(file):
     
     print("Test: Invalid Seed Points Case")
     print("Expected Outcome: The image is unchanged")
-    seed_point_invalid = (-10, 100)
+    seed_point_negative = (-10, 100)
+    print(f"Seed Point: {seed_point_negative}")
+    
+    print("Before Filling:")
+    show_image(image)
+    
+    image_inegative = fill(image=image, seed_point=seed_point_negative)
+    print("Filled Image:")
+    show_image(image_inegative)
+
+def invalid_variable_seed_points_test_pattern(file):
+    """
+    Test: Invalid Seed Points Case (i.e. not integer)
+    Input: Seed Point has a list and float
+    Expected Outcome: The image is unchanged
+    """
+    
+    image = load_image(file)
+    
+    print("Test: Invalid Seed Points Case")
+    print("Expected Outcome: The image is unchanged")
+    seed_point_invalid = ([0.1, 100], 0.1)
     print(f"Seed Point: {seed_point_invalid}")
     
     print("Before Filling:")
@@ -89,6 +110,35 @@ def invalid_seed_points_test_pattern(file):
     show_image(image_invalid)
 
 
+def non_square_image_test_pattern():
+    """
+    Test: Non Square Image
+    Input: Image size is not a square
+    Expected Outcome: The region of interest in the image should be filled
+    """
+    
+    image = [
+        [0, 0, 0],
+        [1, 0, 1],
+        [0, 1, 0],
+        [1, 0, 1],
+        [0, 0, 0]
+    ]
+    
+    print("Test: Non Square Image")
+    print("Expected Outcome: The region of interest in the image should be filled")
+    seed_point = (4, 2)
+    print(f"Seed Point: {seed_point}")
+    
+    print("Before Filling:")
+    show_image(image)
+    
+    image_filled = fill(image=image, seed_point=seed_point)
+    print("Filled Image:")
+    show_image(image_filled)
+
+    
+
 if __name__ == '__main__':
     file = "data/snake.txt"
     normal_test_pattern(file)
@@ -97,5 +147,9 @@ if __name__ == '__main__':
     print("*"*100)
     out_of_bounds_test_pattern(file)   
     print("*"*100)
-    invalid_seed_points_test_pattern(file)
+    negative_seed_points_test_pattern(file)
+    print("*"*100)
+    invalid_variable_seed_points_test_pattern(file)
+    print("*"*100)
+    non_square_image_test_pattern()
     

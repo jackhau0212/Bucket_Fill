@@ -102,15 +102,23 @@ def fill(image, seed_point):
                2 represents a filled pixel
     """
     
+    
     # If function to check whether the seed point satisfies the conditions
-    if seed_point[0] >= len(image) or seed_point[1] >= len(image[0]) or \
-        seed_point[0] < 0 or seed_point[1] < 0 or (not isinstance(seed_point[0], int)) or \
-        (not isinstance(seed_point[1], int)) or (image[seed_point[0]][seed_point[1]] == 1):
-        
-        # return image because the conditions for a valid fill are not satisfied
+    # This check ensures that the row and col in seed point are integers
+    if (not isinstance(seed_point[1], int)) or (not isinstance(seed_point[0], int)):
         return image
+        
+    # This check ensures that the seed point is within the image
+    elif seed_point[0] >= len(image) or seed_point[1] >= len(image[0]) or \
+        seed_point[0] < 0 or seed_point[1] < 0:
+        return image
+        
+    # This check ensures that the seed point is not on the boundary
+    elif (image[seed_point[0]][seed_point[1]] == 1):
+        return image
+    
+    # This ensures that the seed point is good and ccan be filled
     else:
-        # change the seed point to a filled pixel
         image[seed_point[0]][seed_point[1]] = 2
     
     # Explore the image using a breadth-first search method
