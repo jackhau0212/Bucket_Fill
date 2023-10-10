@@ -6,16 +6,16 @@ def load_image(filename):
 
     Example of content of filename:
 
-0 0 0 0 1 1 0 0 0 0
-0 0 1 1 0 0 1 1 0 0
-0 1 1 0 0 1 0 1 1 0
-1 1 0 0 1 0 1 0 1 1
-1 0 0 1 0 0 1 0 0 1
-1 0 0 1 0 0 1 0 0 1
-1 1 0 1 0 0 1 0 1 1
-0 1 1 0 1 1 0 1 1 0
-0 0 1 1 0 0 1 1 0 0
-0 0 0 0 1 1 0 0 0 0
+    0 0 0 0 1 1 0 0 0 0
+    0 0 1 1 0 0 1 1 0 0
+    0 1 1 0 0 1 0 1 1 0
+    1 1 0 0 1 0 1 0 1 1
+    1 0 0 1 0 0 1 0 0 1
+    1 0 0 1 0 0 1 0 0 1
+    1 1 0 1 0 0 1 0 1 1
+    0 1 1 0 1 1 0 1 1 0
+    0 0 1 1 0 0 1 1 0 0
+    0 0 0 0 1 1 0 0 0 0
 
     Args:
         filename (str) : path to file containing the image representation
@@ -102,18 +102,24 @@ def fill(image, seed_point):
                2 represents a filled pixel
     """
     
+    # If function to check whether the seed point satisfies the conditions
     if seed_point[0] >= len(image) or seed_point[1] >= len(image[0]) or \
         seed_point[0] < 0 or seed_point[1] < 0 or (not isinstance(seed_point[0], int)) or \
         (not isinstance(seed_point[1], int)) or (image[seed_point[0]][seed_point[1]] == 1):
         
+        # return image because the conditions for a valid fill are not satisfied
         return image
     else:
+        # change the seed point to a filled pixel
         image[seed_point[0]][seed_point[1]] = 2
     
+    # Explore the image using a breadth-first search method
     explore = [seed_point]
     
     while len(explore) > 0:
         parent_point = explore[0]
+        
+        # goes through the possible child points
         for i in range(4):
             if i == 0:
                 child_point = (parent_point[0] - 1, parent_point[1])
@@ -129,11 +135,13 @@ def fill(image, seed_point):
                     image[child_point[0]][child_point[1]] == 1:
                 continue
             
+            # add the child point into the explore list to explore later
             if image[child_point[0]][child_point[1]] == 0:
                 image[child_point[0]][child_point[1]] = 2
                 
                 explore.append(child_point)
         
+        # remove the parent point from explore list because all the child points of the parent point have been search
         explore.remove(parent_point)
     
     return image
