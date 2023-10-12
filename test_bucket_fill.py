@@ -88,6 +88,7 @@ def negative_seed_points_test_pattern(file):
     print("Filled Image:")
     show_image(image_inegative)
 
+
 def invalid_variable_seed_points_test_pattern(file):
     """
     Test: Invalid Seed Points Case (i.e. not integer)

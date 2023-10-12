@@ -105,19 +105,19 @@ def fill(image, seed_point):
     
     # If function to check whether the seed point satisfies the conditions
     # This check ensures that the row and col in seed point are integers
-    if (not isinstance(seed_point[1], int)) or (not isinstance(seed_point[0], int)):
+    if (not isinstance(seed_point[0], int)) or (not isinstance(seed_point[1], int)):
         return image
-        
+    
     # This check ensures that the seed point is within the image
     elif seed_point[0] >= len(image) or seed_point[1] >= len(image[0]) or \
         seed_point[0] < 0 or seed_point[1] < 0:
         return image
-        
+    
     # This check ensures that the seed point is not on the boundary
     elif (image[seed_point[0]][seed_point[1]] == 1):
         return image
     
-    # This ensures that the seed point is good and ccan be filled
+    # This ensures that the seed point is good and can be filled
     else:
         image[seed_point[0]][seed_point[1]] = 2
     
